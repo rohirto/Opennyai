@@ -25,8 +25,28 @@ def extract_entities_from_judgment_text(to_process, legal_nlp, mini_batch_size, 
 
 def get_sentence_docs(doc_judgment, nlp_judgment):
     sentences = [sent.text for sent in doc_judgment.sents]
+
     docs = []
     for doc in nlp_judgment.pipe(sentences):
         docs.append(doc)
-    combined_docs = spacy.tokens.Doc.from_docs(docs)
-    return combined_docs
+
+    combined_doc = spacy.tokens.Doc.from_docs(docs)
+
+    # Restore sentence boundaries lost by Doc.from_docs().
+    if docs:
+        sentence_start_offsets = []
+        token_offset = 0
+
+        for doc in docs:
+            sentence_start_offsets.append(token_offset)
+            token_offset += len(doc)
+
+        # Initialize the SENT_START annotation.
+        for token in combined_doc:
+            token.is_sent_start = False
+
+        # Mark the beginning of every original sentence.
+        for offset in sentence_start_offsets:
+            combined_doc[offset].is_sent_start = True
+
+    return combined_doc

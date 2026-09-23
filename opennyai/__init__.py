@@ -1,8 +1,25 @@
-from opennyai import ner, utils
-from opennyai.pipeline import Pipeline
-from opennyai.rhetorical_roles.rhetorical_roles import RhetoricalRolePredictor
-from opennyai.summarizer.ExtractiveSummarizer import ExtractiveSummarizer
+import importlib
 
-__version__ = "{0}.{1}.{2}".format("0", "0", "14")
-__author__ = 'OpenNyAI Team'
-__credits__ = 'Opennyai'
+
+def __getattr__(name):
+    if name == "ner":
+        return importlib.import_module(".ner", __name__)
+
+    if name == "utils":
+        return importlib.import_module(".utils", __name__)
+
+    if name == "Pipeline":
+        from opennyai.pipeline import Pipeline
+        return Pipeline
+
+    if name == "RhetoricalRolePredictor":
+        from opennyai.rhetorical_roles.rhetorical_roles import RhetoricalRolePredictor
+        return RhetoricalRolePredictor
+
+    if name == "ExtractiveSummarizer":
+        from opennyai.summarizer.ExtractiveSummarizer import ExtractiveSummarizer
+        return ExtractiveSummarizer
+
+    raise AttributeError(
+        f"module {__name__!r} has no attribute {name!r}"
+    )

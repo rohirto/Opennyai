@@ -5,3 +5,10 @@ dist
 opennyai.egg-info
 create_pypi_package.sh
 .DS_Store
+.venv/
+.venv-legacy/
+__pycache__/
+input/
+output/
+en_legal_ner_trf-3.2.0-py3-none-any.whl
+.python-version
