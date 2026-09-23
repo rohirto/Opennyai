@@ -1,4 +1,5 @@
 from pathlib import Path
+from dataclasses import asdict
 import pdfplumber
 
 from .legal_text_cleaner import LegalTextCleaner
@@ -13,6 +14,7 @@ class LegalDocument:
         preprocessing_report,
     ):
         self.pdf_path = pdf_path
+        self.document_id = pdf_path.stem
         self.raw_text = raw_text
         self.cleaned_text = cleaned_text
         self.preprocessing_report = preprocessing_report
@@ -47,5 +49,5 @@ def ingest_legal_document(pdf_path: Path) -> LegalDocument:
         pdf_path=pdf_path,
         raw_text=raw_text,
         cleaned_text=cleaned_text,
-        preprocessing_report=report,
+        preprocessing_report=asdict(report),
     )
