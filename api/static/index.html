@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="EPFO legal research assistant">
+  <title>EPFO Legal Assistant</title>
+  <link rel="stylesheet" href="/static/style.css?v=2">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar" aria-label="Conversation sidebar">
+      <div class="sidebar-top">
+        <button id="new-conversation" class="new-chat" type="button" aria-label="Start a new conversation">
+          <span class="plus">+</span>
+          <span>New chat</span>
+        </button>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-label">EPFO Legal Assistant</div>
+        <div class="chat-history">
+          <button class="history-item active" type="button">
+            <span class="history-icon">⌕</span>
+            <span>Legal scheme research</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="service-row">
+          <span id="status-dot" class="status-dot"></span>
+          <span id="service-status">Checking service status…</span>
+        </div>
+        <div class="sidebar-note">Responses are grounded in the indexed EPFO legal corpus.</div>
+      </div>
+    </aside>
+
+    <main class="main-panel">
+      <header class="topbar">
+        <div class="mobile-brand">
+          <button id="mobile-new-chat" class="icon-button" type="button" aria-label="New chat">+</button>
+          <div>
+            <div class="brand-title">EPFO Legal Assistant</div>
+            <div class="brand-subtitle">Legal scheme research</div>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <span class="model-pill">EPFO Legal RAG</span>
+        </div>
+      </header>
+
+      <section id="chat-scroller" class="chat-scroller" aria-label="Conversation">
+        <div class="chat-container">
+          <section id="welcome" class="welcome" aria-labelledby="welcome-heading">
+            <div class="welcome-mark" aria-hidden="true">E</div>
+            <h1 id="welcome-heading">How can I help you today?</h1>
+            <p>Ask questions about EPF, EPS, EDLI, legal provisions, tables, rates, and scheme interpretation.</p>
+
+            <div class="prompt-grid" aria-label="Example questions">
+              <button type="button" data-question="What is the rate of contribution under EPF?">
+                <span class="prompt-title">EPF contribution</span>
+                <span class="prompt-text">What is the rate of contribution under EPF?</span>
+              </button>
+              <button type="button" data-question="What is paragraph 3 of the EPS Scheme?">
+                <span class="prompt-title">EPS Scheme</span>
+                <span class="prompt-text">What is paragraph 3 of the EPS Scheme?</span>
+              </button>
+              <button type="button" data-question="What does paragraph 12 of the EDLI Scheme provide?">
+                <span class="prompt-title">EDLI provision</span>
+                <span class="prompt-text">What does paragraph 12 of the EDLI Scheme provide?</span>
+              </button>
+              <button type="button" data-question="What does Table I of the EPS Scheme specify?">
+                <span class="prompt-title">Scheme table</span>
+                <span class="prompt-text">What does Table I of the EPS Scheme specify?</span>
+              </button>
+            </div>
+          </section>
+
+          <section id="chat" class="chat" aria-live="polite"></section>
+        </div>
+      </section>
+
+      <div class="composer-area">
+        <form id="composer" class="composer" novalidate>
+          <label class="sr-only" for="question">Message EPFO Legal Assistant</label>
+          <textarea id="question" name="question" rows="1" required
+            placeholder="Message EPFO Legal Assistant…" autocomplete="off"
+            aria-describedby="composer-help"></textarea>
+          <button id="send-button" class="send-button" type="submit" aria-label="Send message">
+            <span>↑</span>
+          </button>
+        </form>
+        <p id="composer-help">Enter to send · Shift+Enter for a new line</p>
+        <p class="disclaimer">AI-generated responses may contain errors. Verify cited legal sources before taking official action.</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/app.js?v=2" defer></script>
+</body>
+</html>
