@@ -3,6 +3,8 @@ import copy
 from wasabi import msg
 
 import opennyai.ner as InLegalNER
+from opennyai.rhetorical_roles.rhetorical_roles import RhetoricalRolePredictor
+from opennyai.summarizer.ExtractiveSummarizer import ExtractiveSummarizer
 
 
 class Pipeline:
@@ -29,27 +31,16 @@ class Pipeline:
             self.__ner_extractor__ = InLegalNER.load(use_gpu=use_gpu, model_name=ner_model_name)
 
         if 'Rhetorical_Role' in components or 'Summarizer' in components:
-            from opennyai.rhetorical_roles.rhetorical_roles import RhetoricalRolePredictor
-
             if self.__verbose__:
                 msg.info('Loading Rhetorical Role...')
-
-            self.__rr_model__ = RhetoricalRolePredictor(
-                use_gpu=use_gpu,
-                verbose=verbose
-            )
+            self.__rr_model__ = RhetoricalRolePredictor(use_gpu=use_gpu, verbose=verbose)
 
         if 'Summarizer' in components:
-            from opennyai.summarizer.ExtractiveSummarizer import ExtractiveSummarizer
-
             if self.__verbose__:
                 msg.info('Loading Extractive summarizer...')
+            self.__summarizer__ = ExtractiveSummarizer(use_gpu=use_gpu, verbose=verbose,
+                                                       summary_length=summarizer_summary_length)
 
-            self.__summarizer__ = ExtractiveSummarizer(
-                use_gpu=use_gpu,
-                verbose=verbose,
-                summary_length=summarizer_summary_length
-            )
     @staticmethod
     def __combine_model_outputs__(ner_json_results=None, rr_output=None, summary_output=None):
         '''combines the outputs of 3 models into single list'''

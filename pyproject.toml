@@ -5,7 +5,7 @@ description = "A SpaCy pipeline and models for NLP on Indian legal text."
 authors = [{ name = "OpenNyAI Team", email = "aman.tiwari@thoughtworks.com" }]
 license = { text = "MIT" }
 readme = "README.md"
-requires-python = ">=3.12,<3.13"
+requires-python = ">=3.13"
 keywords = [
     "law",
     "indianlegalner",
