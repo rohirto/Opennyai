@@ -12,12 +12,34 @@ function setText(element, text) {
 
 function metadataLines(item) {
   const lines = [];
-  if (item.document_name || item.document_id || item.source)
-    lines.push(item.document_name || item.document_id || item.source);
-  if (item.page_start != null)
-    lines.push(`Page ${item.page_start}${item.page_end != null && item.page_end !== item.page_start ? `–${item.page_end}` : ""}`);
-  if (item.paragraph != null) lines.push(`Paragraph ${item.paragraph}`);
-  if (item.table_id != null) lines.push(`Table ${item.table_id}`);
+
+  if (item.source_file)
+    lines.push(item.source_file);
+
+  if (item.case_name)
+    lines.push(item.case_name);
+
+  if (item.citation)
+    lines.push(`Citation: ${item.citation}`);
+
+  if (item.court)
+    lines.push(`Court: ${item.court}`);
+
+  if (item.judgment_date)
+    lines.push(`Judgment date: ${item.judgment_date}`);
+
+  if (item.document_id)
+    lines.push(`Document: ${item.document_id}`);
+
+  if (item.chunk_index != null)
+    lines.push(`Chunk: ${item.chunk_index}`);
+
+  if (item.role)
+    lines.push(`Role: ${item.role}`);
+
+  if (item.char_start != null && item.char_end != null)
+    lines.push(`Text range: ${item.char_start}–${item.char_end}`);
+
   return lines;
 }
 
@@ -56,9 +78,12 @@ function renderSources(parent, citations, chunks) {
     citations.forEach((citation) => {
       const card = document.createElement("article");
       card.className = "citation";
-      appendText(card, "div",
-        citation.element_type === "table" ? "TABLE" : "LEGAL PROVISION",
-        "citation-kind");
+      appendText(
+        card,
+        "div",
+        citation.case_name ? "JUDGMENT" : "SOURCE",
+        "citation-kind"
+      );
       metadataLines(citation).forEach((line) => appendText(card, "p", line));
       if (citation.element_type)
         appendText(card, "p", `Structure type: ${citation.element_type}`);
